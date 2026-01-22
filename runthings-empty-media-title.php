@@ -1,25 +1,42 @@
 <?php
-/*
-Plugin Name: Empty Media Title On Upload
-Plugin URI: https://runthings.dev
-Description: Sets the image title attribute to an empty field on upload, instead of setting it to the filename
-Version: 1.0.0
-Author: Matthew Harris, runthings.dev
-Author URI: https://runthings.dev/
-*/
 
 /**
- * Empty the image attachment's title only when inserted not updated
- * https://wordpress.stackexchange.com/a/211873/60500
+ * Plugin Name: Clear Media Title On Upload
+ * Plugin URI: https://runthings.dev/wordpress-plugins/empty-media-title/
+ * Description: Clears the image title attribute field on upload, instead of setting it to the slugified filename.
+ * Version: 1.0.0
+ * Author: runthingsdev
+ * Author URI: https://runthings.dev/
+ * License: GPLv3 or later
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * Requires at least: 6.0
+ * Requires PHP: 7.4
+ * Text Domain: runthings-empty-media-title
  */
-add_filter( 'wp_insert_attachment_data', function( $data, $postarr )
-{
-    if( 
-        empty( $postarr['ID'] ) 
-        && isset( $postarr['post_mime_type'] )
-        && wp_match_mime_types( 'image', $postarr['post_mime_type'] ) 
-    )
-        $data['post_title'] = '';
 
-    return $data;
-}, 10, 2 );
+namespace Runthings\EmptyMediaTitle;
+
+if (!defined('WPINC')) {
+    die;
+}
+
+define('RUNTHINGS_EMT_VERSION', '1.0.0');
+define('RUNTHINGS_EMT_URL', plugin_dir_url(__FILE__));
+define('RUNTHINGS_EMT_DIR', plugin_dir_path(__FILE__));
+
+class Bootstrap
+{
+    public function __construct()
+    {
+        add_action('plugins_loaded', [$this, 'init']);
+    }
+
+    public function init(): void
+    {
+        require_once RUNTHINGS_EMT_DIR . 'lib/Plugin.php';
+
+        new \Runthings\EmptyMediaTitle\Plugin();
+    }
+}
+
+new Bootstrap();
