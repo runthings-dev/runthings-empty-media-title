@@ -4,7 +4,7 @@
  * Plugin Name: Clear Media Title On Upload
  * Plugin URI: https://runthings.dev/wordpress-plugins/empty-media-title/
  * Description: Clears the image title attribute field on upload, instead of setting it to the slugified filename.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: runthingsdev
  * Author URI: https://runthings.dev/
  * License: GPLv3 or later
@@ -20,7 +20,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('RUNTHINGS_EMT_VERSION', '1.0.0');
+define('RUNTHINGS_EMT_VERSION', '2.0.0');
 define('RUNTHINGS_EMT_URL', plugin_dir_url(__FILE__));
 define('RUNTHINGS_EMT_DIR', plugin_dir_path(__FILE__));
 

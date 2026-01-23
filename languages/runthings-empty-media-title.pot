@@ -1,0 +1,76 @@
+# Copyright (C) 2026 runthingsdev
+# This file is distributed under the GPLv3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Clear Media Title On Upload 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/runthings-empty-media-title\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-01-23T17:52:35+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: runthings-empty-media-title\n"
+
+#. Plugin Name of the plugin
+#: runthings-empty-media-title.php
+msgid "Clear Media Title On Upload"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: runthings-empty-media-title.php
+msgid "https://runthings.dev/wordpress-plugins/empty-media-title/"
+msgstr ""
+
+#. Description of the plugin
+#: runthings-empty-media-title.php
+msgid "Clears the image title attribute field on upload, instead of setting it to the slugified filename."
+msgstr ""
+
+#. Author of the plugin
+#: runthings-empty-media-title.php
+msgid "runthingsdev"
+msgstr ""
+
+#. Author URI of the plugin
+#: runthings-empty-media-title.php
+msgid "https://runthings.dev/"
+msgstr ""
+
+#: lib/BulkClear.php:33
+msgid "Clear media title"
+msgstr ""
+
+#. translators: %d: number of media items
+#: lib/BulkClear.php:88
+#, php-format
+msgid "Cleared title for %d media item."
+msgid_plural "Cleared titles for %d media items."
+msgstr[0] ""
+msgstr[1] ""
+
+#: lib/BulkClear.php:121
+msgid "Clear titles"
+msgstr ""
+
+#: lib/BulkClear.php:122
+msgid "Clear titles for selected media?"
+msgstr ""
+
+#: lib/BulkClear.php:123
+msgid "Titles cleared successfully."
+msgstr ""
+
+#: lib/BulkClear.php:124
+msgid "Error clearing titles."
+msgstr ""
+
+#: lib/BulkClear.php:136
+msgid "Permission denied."
+msgstr ""
+
+#: lib/BulkClear.php:142
+msgid "No items selected."
+msgstr ""
