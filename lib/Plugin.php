@@ -14,7 +14,7 @@ class Plugin
     }
 
     /**
-     * Clear the image attachment's title on new uploads.
+     * Clear the attachment's title on new uploads.
      *
      * @param array $data                Attachment post data.
      * @param array $postarr             Sanitized post data.
@@ -36,18 +36,17 @@ class Plugin
         /**
          * Filter the MIME types that should have their title cleared.
          *
-         * By default, only images are affected. Return an array of MIME type
-         * patterns to match (e.g., 'image', 'video', 'audio', 'application/pdf').
-         * Return an empty array to match all MIME types.
+         * By default, all media types are affected. Return an array of MIME type
+         * patterns to restrict (e.g., ['image'] for images only).
          * Uses wp_match_mime_types() for matching.
          *
-         * @param array  $allowed_mime_types   Array of MIME type patterns. Default ['image']. Empty array matches all.
+         * @param array  $allowed_mime_types   Array of MIME type patterns. Default [] (all types).
          * @param string $attachment_mime_type The attachment's MIME type.
          * @param array  $postarr              Sanitized post data.
          */
-        $allowed_mime_types = apply_filters('runthings_emt_mime_types', ['image'], $attachment_mime_type, $postarr);
+        $allowed_mime_types = apply_filters('runthings_emt_mime_types', [], $attachment_mime_type, $postarr);
 
-        // Empty array means match all MIME types
+        // Non-empty array means restrict to those MIME types only
         if (!empty($allowed_mime_types) && empty(wp_match_mime_types($allowed_mime_types, $attachment_mime_type))) {
             return $data;
         }
