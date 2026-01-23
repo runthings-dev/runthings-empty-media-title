@@ -46,7 +46,7 @@ Many themes and plugins display the image title in various places - gallery capt
 ## Screenshots
 
 ### Before and After
-![Before: Image uploaded with auto-generated slugified title. After: Image uploaded with empty title field.](https://raw.githubusercontent.com/runthings-dev/runthings-empty-media-title/master/.wordpress-org/screenshot-1.jpg)
+![Before: Image uploaded with auto-generated slugified title. After: Image uploaded with empty title field.](https://raw.githubusercontent.com/runthings-dev/runthings-empty-media-title/master/.wordpress-org/screenshot-1.png)
 
 ## Filters
 
