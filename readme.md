@@ -113,6 +113,12 @@ add_filter('runthings_emt_mime_types', function($allowed_mime_types) {
 
 ## Changelog
 
+### 2.0.1 - 23rd January 2026
+
+- Improved bulk action messages
+- Add confirmation prompt to bulk edit list view
+- Fixed nonce verification in bulk action processing
+
 ### 2.0.0 - 23rd January 2026
 
 - Complete plugin refactor with namespaced class structure

@@ -57,6 +57,11 @@ Many themes and plugins display the media title in various places - gallery capt
 
 == Changelog ==
 
+= 2.0.1 - 23rd January 2026 =
+* Improved bulk action messages
+* Add confirmation prompt to bulk edit list view
+* Fixed nonce verification in bulk action processing
+
 = 2.0.0 - 23rd January 2026 =
 * Complete plugin refactor with namespaced class structure
 * Added bulk action "Clear media title" to clear titles on existing media items
@@ -68,6 +73,9 @@ Many themes and plugins display the media title in various places - gallery capt
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+Improved bulk action messages and security fix for nonce verification.
 
 = 2.0.0 =
 Added bulk action, and added filters.
