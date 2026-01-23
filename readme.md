@@ -113,13 +113,16 @@ add_filter('runthings_emt_mime_types', function($allowed_mime_types) {
 
 ## Changelog
 
-### 2.0.0
+### 2.0.0 - 23rd January 2026
+
 - Complete plugin refactor with namespaced class structure
 - Added bulk action "Clear Media Title" to clear titles on existing media items
+- Changed default from `['image']` to `[]` (all media types)
 - Added `runthings_emt_skip` filter for developer customization
 - Added `runthings_emt_mime_types` filter to extend beyond images
 
 ### 1.0.0 - 6th January 2022
+
 - Initial release
 
 ## License

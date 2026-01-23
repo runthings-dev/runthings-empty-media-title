@@ -57,9 +57,10 @@ Many themes and plugins display the media title in various places - gallery capt
 
 == Changelog ==
 
-= 2.0.0 =
+= 2.0.0 - 23rd January 2026 =
 * Complete plugin refactor with namespaced class structure
-* Added bulk action "Clear Media Title" to clear titles on existing media items
+* Added bulk action "Clear media title" to clear titles on existing media items
+* Changed default from `['image']` to `[]` (all media types)
 * Added `runthings_emt_skip` filter for developer customization
 * Added `runthings_emt_mime_types` filter to extend beyond images
 
