@@ -34,8 +34,10 @@ class Bootstrap
     public function init(): void
     {
         require_once RUNTHINGS_EMT_DIR . 'lib/Plugin.php';
+        require_once RUNTHINGS_EMT_DIR . 'lib/BulkClear.php';
 
         new \Runthings\EmptyMediaTitle\Plugin();
+        new \Runthings\EmptyMediaTitle\BulkClear();
     }
 }
 
