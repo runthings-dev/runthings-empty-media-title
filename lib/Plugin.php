@@ -28,8 +28,27 @@ class Plugin
             return $data;
         }
 
-        $mime = $postarr['post_mime_type'] ?? '';
-        if ($mime === '' || !wp_match_mime_types('image', $mime)) {
+        $attachment_mime_type = $postarr['post_mime_type'] ?? '';
+        if ($attachment_mime_type === '') {
+            return $data;
+        }
+
+        /**
+         * Filter the MIME types that should have their title cleared.
+         *
+         * By default, only images are affected. Return an array of MIME type
+         * patterns to match (e.g., 'image', 'video', 'audio', 'application/pdf').
+         * Return an empty array to match all MIME types.
+         * Uses wp_match_mime_types() for matching.
+         *
+         * @param array  $allowed_mime_types   Array of MIME type patterns. Default ['image']. Empty array matches all.
+         * @param string $attachment_mime_type The attachment's MIME type.
+         * @param array  $postarr              Sanitized post data.
+         */
+        $allowed_mime_types = apply_filters('runthings_emt_mime_types', ['image'], $attachment_mime_type, $postarr);
+
+        // Empty array means match all MIME types
+        if (!empty($allowed_mime_types) && empty(wp_match_mime_types($allowed_mime_types, $attachment_mime_type))) {
             return $data;
         }
 
