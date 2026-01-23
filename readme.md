@@ -126,4 +126,6 @@ Visit [runthings.dev](https://runthings.dev/) for more WordPress plugins and res
 
 Contribute or report issues at the [GitHub repository](https://github.com/runthings-dev/runthings-empty-media-title).
 
+Insert space by Xinh Studio from [Noun Project](https://thenounproject.com/browse/icons/term/insert-space/) (CC BY 3.0) - https://thenounproject.com/icon/insert-space-239543/
 
+Image by David Khai from [Noun Project](https://thenounproject.com/browse/icons/term/image/) (CC BY 3.0) - https://thenounproject.com/icon/image-661355/
