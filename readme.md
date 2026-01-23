@@ -80,14 +80,36 @@ add_filter('runthings_emt_skip', function($skip, $data, $postarr) {
 }, 10, 3);
 ```
 
+### runthings_emt_mime_types
+
+Filter which MIME types should have their title cleared. By default, only images are affected. Return an empty array to match all MIME types.
+
+**Parameters:**
+
+- `$allowed_mime_types` (array) - Array of MIME type patterns. Default `['image']`. Empty array matches all.
+- `$attachment_mime_type` (string) - The attachment's MIME type.
+- `$postarr` (array) - Sanitized post data.
+
+**Example - Clear title for all media types:**
+
+```php
+add_filter('runthings_emt_mime_types', '__return_empty_array');
+```
+
+**Example - Clear title for images and PDFs only:**
+
+```php
+add_filter('runthings_emt_mime_types', function($allowed_mime_types) {
+    return ['image', 'application/pdf'];
+});
+```
+
 ## Changelog
 
 ### 2.0.0
 - Complete plugin refactor with namespaced class structure
 - Added `runthings_emt_skip` filter for developer customization
-- Updated to use modern WordPress filter signature (4 parameters)
-- Improved MIME type detection using `wp_match_mime_types()`
-- Code standards improvements
+- Added `runthings_emt_mime_types` filter to extend beyond images
 
 ### 1.0.0 - 6th January 2022
 - Initial release
