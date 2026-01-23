@@ -19,9 +19,10 @@ This plugin clears the title field for newly uploaded images, ensuring that if a
 = Features =
 
 * Automatically clears the title field for new image uploads
-* Only affects new uploads - existing media library items are unchanged
+* Bulk action to clear titles on existing media library items
+* Only affects new uploads - existing media library items are unchanged unless bulk action is used
 * Lightweight with no settings page required
-* Developer-friendly with a filter for custom exceptions
+* Developer-friendly with filters
 
 = How It Works =
 
@@ -37,11 +38,15 @@ The plugin hooks into WordPress's `wp_insert_attachment_data` filter and clears 
 
 = Does this affect existing images in my media library? =
 
-No, this plugin only affects new uploads. Existing images retain their current titles.
+New uploads are cleared automatically. For existing images, you can use the bulk action in the Media Library to clear titles on selected items.
 
 = Does this work for all file types? =
 
 No, this plugin only clears titles for image files (JPEG, PNG, GIF, WebP, etc.). Other attachment types like PDFs, videos, and audio files are unaffected.
+
+= Can I extend this to other file types? =
+
+Yes! Use the `runthings_emt_mime_types` filter to include additional MIME types. See the Filters section below.
 
 = Can I exclude certain uploads from having their title cleared? =
 
@@ -59,15 +64,17 @@ Many themes and plugins display the image title in various places - gallery capt
 
 = 2.0.0 =
 * Complete plugin refactor with namespaced class structure
+* Added bulk action "Clear Media Title" to clear titles on existing media items
 * Added `runthings_emt_skip` filter for developer customization
 * Added `runthings_emt_mime_types` filter to extend beyond images
-
 
 = 1.0.0 - 6th January 2022 =
 * Initial release
 
 == Upgrade Notice ==
 
+= 2.0.0 =
+Added bulk action, and added filters.
 
 == Filters ==
 
