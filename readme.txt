@@ -53,8 +53,7 @@ Many themes and plugins display the image title in various places - gallery capt
 
 == Screenshots ==
 
-1. Before: Image uploaded with auto-generated slugified title
-2. After: Image uploaded with empty title field
+1. Before: Image uploaded with auto-generated slugified title. After: Image uploaded with empty title field.
 
 == Changelog ==
 

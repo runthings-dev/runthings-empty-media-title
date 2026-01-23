@@ -43,6 +43,11 @@ Yes! Use the `runthings_emt_skip` filter to conditionally skip clearing the titl
 
 Many themes and plugins display the image title in various places - gallery captions, lightbox overlays, or HTML title attributes. An auto-generated slugified filename like "DSC-0042-final-edit" looks unprofessional. With an empty title, you're in control of what gets displayed.
 
+## Screenshots
+
+### Before and After
+![Before: Image uploaded with auto-generated slugified title. After: Image uploaded with empty title field.](https://raw.githubusercontent.com/runthings-dev/runthings-empty-media-title/master/.wordpress-org/screenshot-1.jpg)
+
 ## Filters
 
 ### runthings_emt_skip
