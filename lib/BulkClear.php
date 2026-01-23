@@ -66,7 +66,10 @@ class BulkClear
             }
         }
 
-        return add_query_arg('runthings_emt_cleared', $cleared_count, $redirect_url);
+        return add_query_arg([
+            'runthings_emt_cleared' => $cleared_count,
+            'runthings_emt_nonce'   => wp_create_nonce('runthings_emt_notice'),
+        ], $redirect_url);
     }
 
     /**
@@ -74,7 +77,11 @@ class BulkClear
      */
     public function show_admin_notice(): void
     {
-        if (!isset($_GET['runthings_emt_cleared'])) {
+        if (!isset($_GET['runthings_emt_cleared'], $_GET['runthings_emt_nonce'])) {
+            return;
+        }
+
+        if (!wp_verify_nonce(sanitize_key($_GET['runthings_emt_nonce']), 'runthings_emt_notice')) {
             return;
         }
 
