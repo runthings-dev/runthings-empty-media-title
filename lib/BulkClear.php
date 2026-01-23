@@ -12,9 +12,14 @@ class BulkClear
 
     public function __construct()
     {
+        // List view bulk action
         add_filter('bulk_actions-upload', [$this, 'add_bulk_action']);
         add_filter('handle_bulk_actions-upload', [$this, 'handle_bulk_action'], 10, 3);
         add_action('admin_notices', [$this, 'show_admin_notice']);
+
+        // Grid view bulk action
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_grid_script']);
+        add_action('wp_ajax_runthings_emt_bulk_clear', [$this, 'ajax_bulk_clear']);
     }
 
     /**
@@ -90,6 +95,75 @@ class BulkClear
                 )
             )
         );
+    }
+
+    /**
+     * Enqueue script for grid view bulk action.
+     *
+     * @param string $hook_suffix The current admin page.
+     */
+    public function enqueue_grid_script(string $hook_suffix): void
+    {
+        if ($hook_suffix !== 'upload.php') {
+            return;
+        }
+
+        wp_enqueue_script(
+            'runthings-emt-grid-bulk',
+            RUNTHINGS_EMT_URL . 'assets/js/grid-bulk.js',
+            ['media-views'],
+            RUNTHINGS_EMT_VERSION,
+            true
+        );
+
+        wp_localize_script('runthings-emt-grid-bulk', 'runthingsEmtBulk', [
+            'nonce'        => wp_create_nonce('runthings_emt_bulk_clear'),
+            'buttonText'   => __('Clear titles', 'runthings-empty-media-title'),
+            'confirmText'  => __('Clear titles for selected media?', 'runthings-empty-media-title'),
+            'successText'  => __('Titles cleared successfully.', 'runthings-empty-media-title'),
+            'errorText'    => __('Error clearing titles.', 'runthings-empty-media-title'),
+        ]);
+    }
+
+    /**
+     * Handle AJAX bulk clear request from grid view.
+     */
+    public function ajax_bulk_clear(): void
+    {
+        check_ajax_referer('runthings_emt_bulk_clear', 'nonce');
+
+        if (!current_user_can('upload_files')) {
+            wp_send_json_error(['message' => __('Permission denied.', 'runthings-empty-media-title')]);
+        }
+
+        $ids = isset($_POST['ids']) ? array_map('intval', (array) $_POST['ids']) : [];
+
+        if (empty($ids)) {
+            wp_send_json_error(['message' => __('No items selected.', 'runthings-empty-media-title')]);
+        }
+
+        $cleared = 0;
+        foreach ($ids as $id) {
+            $post = get_post($id);
+            if (!$post || $post->post_type !== 'attachment') {
+                continue;
+            }
+
+            if (!current_user_can('edit_post', $id)) {
+                continue;
+            }
+
+            $result = wp_update_post([
+                'ID'         => $id,
+                'post_title' => '',
+            ]);
+
+            if ($result && !is_wp_error($result)) {
+                $cleared++;
+            }
+        }
+
+        wp_send_json_success(['cleared' => $cleared]);
     }
 }
 
