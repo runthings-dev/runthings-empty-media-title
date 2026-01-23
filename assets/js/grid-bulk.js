@@ -58,13 +58,12 @@
 
         var controller = this.controller;
 
-        // Add our button - priority -75 places it after delete (-80) but before bulk select toggle (-70)
         this.toolbar.set('clearTitleButton', new ClearTitleButton({
             text: runthingsEmtBulk.buttonText,
             style: 'primary',
             disabled: true,
             controller: controller,
-            priority: -75,
+            priority: -75, // priority -75 places it after delete (-80) but before bulk select toggle (-70)
             click: function () {
                 var selection = controller.state().get('selection');
                 var ids = selection.pluck('id');
@@ -90,11 +89,15 @@
                     },
                     success: function (response) {
                         if (response.success) {
+                            var count = ids.length;
+                            var successText = count === 1
+                                ? runthingsEmtBulk.successTextSingular
+                                : runthingsEmtBulk.successTextPlural;
                             // Update models in the selection to reflect cleared titles
                             selection.each(function (model) {
                                 model.set('title', '');
                             });
-                            alert(runthingsEmtBulk.successText);
+                            alert(successText.replace('%d', count));
                             // Clear selection and exit bulk select mode
                             selection.reset();
                             controller.deactivateMode('select').activateMode('edit');

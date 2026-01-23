@@ -18,8 +18,29 @@ class BulkClear
         add_action('admin_notices', [$this, 'show_admin_notice']);
 
         // Grid view bulk action
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_grid_script']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
         add_action('wp_ajax_runthings_emt_bulk_clear', [$this, 'ajax_bulk_clear']);
+    }
+
+    /**
+     * Get all translatable strings for the bulk action.
+     *
+     * @return array
+     */
+    private static function get_strings(): array
+    {
+        return [
+            'bulkActionLabel' => __('Clear media title', 'runthings-empty-media-title'),
+            'buttonText'      => __('Clear titles', 'runthings-empty-media-title'),
+            'confirmText'     => __("You are about to clear the titles for these items.\nThis action cannot be undone.\n'Cancel' to stop, 'OK' to clear.", 'runthings-empty-media-title'),
+            /* translators: %d: number of media items */
+            'successSingular' => __('Cleared title for %d media item.', 'runthings-empty-media-title'),
+            /* translators: %d: number of media items */
+            'successPlural'   => __('Cleared titles for %d media items.', 'runthings-empty-media-title'),
+            'errorText'       => __('Error clearing titles.', 'runthings-empty-media-title'),
+            'permissionError' => __('Permission denied.', 'runthings-empty-media-title'),
+            'noItemsError'    => __('No items selected.', 'runthings-empty-media-title'),
+        ];
     }
 
     /**
@@ -30,7 +51,8 @@ class BulkClear
      */
     public function add_bulk_action(array $actions): array
     {
-        $actions[self::BULK_ACTION] = __('Clear media title', 'runthings-empty-media-title');
+        $strings = self::get_strings();
+        $actions[self::BULK_ACTION] = $strings['bulkActionLabel'];
         return $actions;
     }
 
@@ -85,36 +107,30 @@ class BulkClear
             return;
         }
 
-        $count = intval($_GET['runthings_emt_cleared']);
+        $count   = intval($_GET['runthings_emt_cleared']);
+        $strings = self::get_strings();
+        $message = 1 === $count ? $strings['successSingular'] : $strings['successPlural'];
 
         printf(
             '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
-            esc_html(
-                sprintf(
-                    /* translators: %d: number of media items */
-                    _n(
-                        'Cleared title for %d media item.',
-                        'Cleared titles for %d media items.',
-                        $count,
-                        'runthings-empty-media-title'
-                    ),
-                    $count
-                )
-            )
+            esc_html(sprintf($message, $count))
         );
     }
 
     /**
-     * Enqueue script for grid view bulk action.
+     * Enqueue scripts for bulk actions.
      *
      * @param string $hook_suffix The current admin page.
      */
-    public function enqueue_grid_script(string $hook_suffix): void
+    public function enqueue_scripts(string $hook_suffix): void
     {
         if ($hook_suffix !== 'upload.php') {
             return;
         }
 
+        $strings = self::get_strings();
+
+        // Grid view bulk action
         wp_enqueue_script(
             'runthings-emt-grid-bulk',
             RUNTHINGS_EMT_URL . 'assets/js/grid-bulk.js',
@@ -124,11 +140,27 @@ class BulkClear
         );
 
         wp_localize_script('runthings-emt-grid-bulk', 'runthingsEmtBulk', [
-            'nonce'        => wp_create_nonce('runthings_emt_bulk_clear'),
-            'buttonText'   => __('Clear titles', 'runthings-empty-media-title'),
-            'confirmText'  => __('Clear titles for selected media?', 'runthings-empty-media-title'),
-            'successText'  => __('Titles cleared successfully.', 'runthings-empty-media-title'),
-            'errorText'    => __('Error clearing titles.', 'runthings-empty-media-title'),
+            'nonce'               => wp_create_nonce('runthings_emt_bulk_clear'),
+            'action'              => self::BULK_ACTION,
+            'buttonText'          => $strings['buttonText'],
+            'confirmText'         => $strings['confirmText'],
+            'successTextSingular' => $strings['successSingular'],
+            'successTextPlural'   => $strings['successPlural'],
+            'errorText'           => $strings['errorText'],
+        ]);
+
+        // List view bulk action confirmation
+        wp_enqueue_script(
+            'runthings-emt-list-bulk',
+            RUNTHINGS_EMT_URL . 'assets/js/list-bulk.js',
+            ['jquery'],
+            RUNTHINGS_EMT_VERSION,
+            true
+        );
+
+        wp_localize_script('runthings-emt-list-bulk', 'runthingsEmtList', [
+            'action'      => self::BULK_ACTION,
+            'confirmText' => $strings['confirmText'],
         ]);
     }
 
@@ -139,14 +171,16 @@ class BulkClear
     {
         check_ajax_referer('runthings_emt_bulk_clear', 'nonce');
 
+        $strings = self::get_strings();
+
         if (!current_user_can('upload_files')) {
-            wp_send_json_error(['message' => __('Permission denied.', 'runthings-empty-media-title')]);
+            wp_send_json_error(['message' => $strings['permissionError']]);
         }
 
         $ids = isset($_POST['ids']) ? array_map('intval', (array) $_POST['ids']) : [];
 
         if (empty($ids)) {
-            wp_send_json_error(['message' => __('No items selected.', 'runthings-empty-media-title')]);
+            wp_send_json_error(['message' => $strings['noItemsError']]);
         }
 
         $cleared = 0;
