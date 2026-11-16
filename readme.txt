@@ -3,7 +3,7 @@ Contributors: runthingsdev
 Tags: media, images, title, upload, attachment
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -57,6 +57,9 @@ Many themes and plugins display the media title in various places - gallery capt
 
 == Changelog ==
 
+= 2.0.2 - 16th November 2026 =
+* Updated WordPress tested-up-to metadata to 7.1.
+
 = 2.0.1 - 23rd January 2026 =
 * Improved bulk action messages
 * Add confirmation prompt to bulk edit list view
@@ -73,6 +76,9 @@ Many themes and plugins display the media title in various places - gallery capt
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+Updated WordPress tested-up-to metadata to 7.1.
 
 = 2.0.1 =
 Improved bulk action messages and security fix for nonce verification.

@@ -113,6 +113,10 @@ add_filter('runthings_emt_mime_types', function($allowed_mime_types) {
 
 ## Changelog
 
+### 2.0.2 - 16th November 2026
+
+- Updated WordPress tested-up-to metadata to 7.1.
+
 ### 2.0.1 - 23rd January 2026
 
 - Improved bulk action messages
